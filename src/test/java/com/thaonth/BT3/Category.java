@@ -253,14 +253,28 @@ public class Category {
         WebElement icon_Delete = driver.findElement(By.xpath("(//div[@class='card-body']//descendant::tbody/tr/td[10])/a[@title= 'Delete']"));
         Assert.assertTrue(icon_Delete.isDisplayed(), "Icon Delete isn't display");
         icon_Delete.click();
-        driver.findElement(By.xpath("//div[@class='modal-content']"));
-        String headerConfirmation = driver.findElement(By.xpath("//h4[normalize-space()='Delete Confirmation']")).getText();
-        Assert.assertEquals(headerConfirmation, "Delete Confirmation", "Header Confirmation is not right.");
-//        String confirmationMessage = driver.findElement(By.xpath("//div[@class='modal-content']//child::div/p")).getText();
-//        Assert.assertEquals(confirmationMessage, "Are you sure to delete this?", "Confirmation message is not true");
-//        driver.findElement(By.xpath("//a[@id='delete-link']")).click();
-//        verifyMessageActionSuccessful("Category has been deleted successfully");
-
+        WebElement modalDelete =  driver.findElement(By.xpath("//div[@id='delete-modal']"));
+        sleep(2);
+        WebElement modal_header = modalDelete.findElement(By.xpath(".//div[@class='modal-header']//h4[normalize-space()='Delete Confirmation']"));
+        sleep(2);
+        WebElement modal_content = modalDelete.findElement(By.xpath(".//div[contains(@class,'modal-body')]//p[@class='mt-1']"));
+        sleep(2);
+        WebElement bnt_Delete = modalDelete.findElement(By.xpath(".//div[contains(@class,'modal-body')]//a[@id='delete-link']"));
+        sleep(2);
+        Assert.assertEquals(modal_header.getText(),"Delete Confirmation", "Header Modal is not right");
+        sleep(1);
+        Assert.assertEquals(modal_content.getText(),"Are you sure to delete this?", "Message confirm is not right" );
+        sleep(1);
+        bnt_Delete.click();
+        verifyMessageActionSuccessful("Category has been deleted successfully");
+        sleep(1);
+        driver.findElement(By.xpath("//input[@id='search']")).sendKeys("[07082024] - Category Update");
+        sleep(1);
+        driver.findElement(By.xpath("//input[@id='search']")).sendKeys(Keys.ENTER);
+        sleep(1);
+        String nameCategory =  driver.findElement(By.xpath("//td[normalize-space()='Nothing found']")).getText();
+        sleep(1);
+        Assert.assertEquals(nameCategory, "Nothing found", "Delete category unsuccessful");
     }
 
 }
