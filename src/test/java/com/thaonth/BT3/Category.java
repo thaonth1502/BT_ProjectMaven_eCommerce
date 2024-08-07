@@ -15,6 +15,7 @@ import java.time.Duration;
 public class Category {
 
     WebDriver driver;
+    SoftAssert softAssert = new SoftAssert();
 
     public void sleep(double second){
         try {
@@ -46,90 +47,220 @@ public class Category {
         driver.findElement(By.xpath("//button[normalize-space()='Login']")).click();
         sleep(1);
     }
-
-    @Test
-    public void createNewCategory(){
-        SoftAssert softAssert = new SoftAssert();
-       //Click menu Product
+    public void clickMenuProduct(){
+        //Click menu Product
         WebElement menuProducts = driver.findElement(By.xpath("//span[normalize-space()='Products']"));
         Assert.assertTrue(menuProducts.isDisplayed(), "Menu Products isn't display");
         menuProducts.click();
         sleep(1);
-
-        //Click menu Category
+    }
+    public void clickMenuCategory(){
         WebElement menuCategory = driver.findElement(By.xpath("//span[normalize-space()='Category']"));
         Assert.assertTrue(menuCategory.isDisplayed(), "Menu Category isn't display");
         menuCategory.click();
         sleep(1);
+    }
 
+    public void verifyHeardPageCategory(){
         //verify headerPage
         WebElement headerPage = driver.findElement(By.xpath("//h1[normalize-space()='All categories']"));
         softAssert.assertTrue(headerPage.isDisplayed(),"Header Page isn't right");
         softAssert.assertEquals(headerPage.getText(),"All categories", "Header page isn't right");
+    }
 
+    public void clickAddNewCategoryButton(){
         //Click button Add New Category
         WebElement btn_AddNewCategory = driver.findElement(By.xpath("//span[normalize-space()='Add New category']"));
         Assert.assertTrue(btn_AddNewCategory.isDisplayed(), "Add new Category button isn't display");
         Assert.assertEquals(btn_AddNewCategory.getText(), "Add New category", " Add new category button's name isn't right");
         btn_AddNewCategory.click();
+    }
 
+    public void verifyHeaderPageAddNewCategory(){
         //Verify headerPage Add New Category
         WebElement headerPageAddNewCategory = driver.findElement(By.xpath( "//h5[normalize-space()='Category Information']"));
         softAssert.assertTrue(headerPageAddNewCategory.isDisplayed(),"Header page add new category isn't display");
         softAssert.assertEquals(headerPageAddNewCategory.getText(), "Category Information", "Header Page Add new Category isn't right");
+    }
 
-        driver.findElement(By.xpath("//input[@id='name']")).sendKeys("[05082024] - Category");
-        driver.findElement(By.xpath("//input[@id='order_level']")).sendKeys("1");
-        Select select = new Select(driver.findElement(By.xpath("//select[@name='digital']")));
-        select.selectByVisibleText("Physical");
-        sleep(1);
+    public void addBannerAndIcon(){
+        WebElement att_Banner = driver.findElement(By.xpath("//label[contains(normalize-space(),'Banner')]//following-sibling::div/div[1]"));
+        WebElement att_icon = driver.findElement(By.xpath( "//label[contains(normalize-space(),'Icon')]//following-sibling::div/div[1]"));
 
-        driver.findElement(By.xpath("//label[contains(normalize-space(),'Banner')]//following-sibling::div/div[1]")).click();
-        driver.findElement(By.xpath("//input[@placeholder='Search your files']")).sendKeys("WMNS_AIR_JORDAN_Gree_MID");
-        sleep(1);
-        driver.findElement(By.xpath("//div[@title='WMNS_AIR_JORDAN_Gree_MID.png']")).click();
+        //Add Banner
+            att_Banner.click();
+            sleep(1);
+            driver.findElement(By.xpath("//input[@placeholder='Search your files']")).sendKeys("WMNS_AIR_JORDAN_Gree_MID");
+            sleep(3);
+            driver.findElement(By.xpath("//div[@title='WMNS_AIR_JORDAN_Gree_MID.png']")).click();
+            sleep(2);
+            WebElement btn_AddFilesBanner = driver.findElement(By.xpath("//button[normalize-space()='Add Files']"));
+            Assert.assertTrue(btn_AddFilesBanner.isDisplayed(),"Button isn't display");
+            Assert.assertEquals(btn_AddFilesBanner.getText(), "Add Files", "Button's name is not right");
+            btn_AddFilesBanner.click();
+            sleep(1);
 
-        driver.findElement(By.xpath("//button[normalize-space()='Add Files']")).click();
-        sleep(1);
+            //Add icon
+            att_icon.click();
+            sleep(1);
+            driver.findElement(By.xpath("//input[@placeholder='Search your files']")).sendKeys("niki");
+            sleep(3);
+            driver.findElement(By.xpath("//div[@title='niki.png']")).click();
+            sleep(2);
+            WebElement btn_AddFilesIcon = driver.findElement(By.xpath("//button[normalize-space()='Add Files']"));
+            Assert.assertTrue(btn_AddFilesIcon.isDisplayed(),"Button isn't display");
+            Assert.assertEquals(btn_AddFilesIcon.getText(), "Add Files", "Button's name is not right");
+            btn_AddFilesIcon.click();
+            sleep(1);
+    }
+    public void inputDataAddNewCategory(String categoryName){
+        WebElement input_name =  driver.findElement(By.xpath("//input[@id='name']"));
+        WebElement dropdown_ParentCategory = driver.findElement(By.xpath("//input[@id='order_level']"));
+        WebElement dropdown_Type = driver.findElement(By.xpath("//select[@name='digital']"));
+        WebElement input_OrderingNumber = driver.findElement(By.xpath("//input[@id='order_level']"));
 
-        driver.findElement(By.xpath( "//label[contains(normalize-space(),'Icon')]//following-sibling::div/div[1]")).click();
-        driver.findElement(By.xpath("//input[@placeholder='Search your files']")).sendKeys("niki");
-        sleep(1);
-        driver.findElement(By.xpath("//div[@title='niki.png']")).click();
+        WebElement input_MetaTitle = driver.findElement(By.xpath("//input[@name='meta_title']"));
+        WebElement input_MetaDescription = driver.findElement(By.xpath("//textarea[@name='meta_description']"));
+        WebElement dropdown_FilteringAttributes = driver.findElement(By.xpath("//label[normalize-space()='Filtering Attributes']//parent::div//child::button"));
 
-        WebElement btn_AddFiles = driver.findElement(By.xpath("//button[normalize-space()='Add Files']"));
-        Assert.assertTrue(btn_AddFiles.isDisplayed(),"Button isn't display");
-        Assert.assertEquals(btn_AddFiles.getText(), "Add Files", "Button's name is not right");
-        btn_AddFiles.click();
-        sleep(1);
+        if (input_name.getAttribute("value").isBlank()) {
+            input_name.sendKeys(categoryName);
+            sleep(1);
+        } else {
+            input_name.clear();
+            input_name.sendKeys(categoryName);
+            sleep(1);
+        }
 
-        driver.findElement(By.xpath("//input[@name='meta_title']")).sendKeys("Meta Title");
-        driver.findElement(By.xpath("//textarea[@name='meta_description']")).sendKeys("Meta Description");
-        sleep(1);
+        if(dropdown_ParentCategory.getAttribute("value").isBlank()){
+            dropdown_ParentCategory.sendKeys("1");
+            sleep(1);
+        }else {
+            dropdown_ParentCategory.clear();
+            dropdown_ParentCategory.sendKeys("1");
+            sleep(1);
+        }
 
-        driver.findElement(By.xpath("//button[@title='Nothing selected']")).click();
-        driver.findElement(By.xpath("//div[@class='dropdown-menu show']//input[@aria-label='Search']")).sendKeys("Size");
-        driver.findElement(By.xpath("//div[@class='dropdown-menu show']//input[@aria-label='Search']")).sendKeys(Keys.ENTER);
-        sleep(1);
-        driver.findElement(By.xpath("//button[@title='Size']")).click();
+        if(input_OrderingNumber.getAttribute("value").isBlank()){
+            input_OrderingNumber.sendKeys("1");
+            sleep(1);
+        }
+        else {
+            input_OrderingNumber.clear();
+            input_OrderingNumber.sendKeys("1");
+            sleep(1);
+        }
 
+        //Select Type
+            Select select = new Select(dropdown_Type);
+            select.selectByVisibleText("Physical");
+            sleep(1);
+
+        if(input_MetaTitle.getAttribute("value").isBlank()){
+            input_MetaTitle.sendKeys("Meta Title");
+            sleep(1);
+        } else {
+            input_MetaTitle.clear();
+            input_MetaTitle.sendKeys("Meta Title");
+            sleep(1);
+        }
+
+
+        if(input_MetaDescription.getAttribute("value").isBlank()){
+            input_MetaDescription.sendKeys("Meta Description");
+            sleep(1);
+        } else {
+            input_MetaDescription.clear();
+            input_MetaDescription.sendKeys("Meta Description");
+            sleep(1);
+        }
+
+        if(dropdown_FilteringAttributes.getAttribute("title").contains("Nothing selected")) {
+            dropdown_FilteringAttributes.click();
+            driver.findElement(By.xpath("//div[@class='dropdown-menu show']//input[@aria-label='Search']")).sendKeys("Size");
+            driver.findElement(By.xpath("//div[@class='dropdown-menu show']//input[@aria-label='Search']")).sendKeys(Keys.ENTER);
+            sleep(1);
+            driver.findElement(By.xpath("//button[@title='Size']")).click();
+        }
+    }
+
+    public void clickSaveButton(){
         WebElement btn_Save = driver.findElement(By.xpath("//button[normalize-space()='Save']"));
         Assert.assertTrue(btn_Save.isDisplayed(), "Save button is not display");
         Assert.assertEquals(btn_Save.getText(), "Save", "Button name is not right");
         btn_Save.click();
         sleep(1);
+    }
 
+    public void verifyMessageActionSuccessful(String expectedMessage){
         //Verify message add successful
         WebElement messageSuccessful = driver.findElement(By.xpath("//span[@data-notify='message']"));
-        String messageExpected = "Category has been inserted successfully";
-        Assert.assertEquals(messageSuccessful.getText(), messageExpected, "Add new category successfully");
-
-        //Search Category vua add
-        driver.findElement(By.xpath("//input[@id='search']")).sendKeys("[05082024] - Category");
+        Assert.assertEquals(messageSuccessful.getText(), expectedMessage, "Add new category successfully");
+    }
+    public void searchCategory(String categoryName){
+//        Search Category vua add
+        driver.findElement(By.xpath("//input[@id='search']")).sendKeys(categoryName);
         driver.findElement(By.xpath("//input[@id='search']")).sendKeys(Keys.ENTER);
         sleep(1);
         String nameCategory =  driver.findElement(By.xpath("//div[@class='card-body']//descendant::tbody/tr/td[2]")).getText();
 
-        Assert.assertEquals(nameCategory, "[05082024] - Category", "Category's name is not right" );
+        Assert.assertEquals(nameCategory, categoryName, "Category's name is not right" );
     }
+
+    @Test
+    public void createNewCategory(){
+        //click Menu Product
+        clickMenuProduct();
+        //Click menu category
+        clickMenuCategory();
+        //verify header page category
+        verifyHeardPageCategory();
+
+        //click add new category button
+        clickAddNewCategoryButton();
+        //Verify headerPage Add New Category
+        verifyHeaderPageAddNewCategory();
+
+        //input data into all required fields in add new category form
+        inputDataAddNewCategory("[07082024] - Category");
+        addBannerAndIcon();
+        clickSaveButton();
+        verifyMessageActionSuccessful("Category has been inserted successfully");
+        searchCategory("[07082024] - Category");
+    }
+    @Test (description = "Edit a category")
+    public void editCategory(){
+        clickMenuProduct();
+        clickMenuCategory();
+        verifyHeardPageCategory();
+        searchCategory("[07082024] - Category");
+        WebElement icon_Edit = driver.findElement(By.xpath("(//div[@class='card-body']//descendant::tbody/tr/td[10])/a[@title= 'Edit']"));
+        Assert.assertTrue(icon_Edit.isDisplayed(), "Icon Edit isn't display");
+        icon_Edit.click();
+        inputDataAddNewCategory("[07082024] - Category Update");
+        clickSaveButton();
+        verifyMessageActionSuccessful("Category has been updated successfully");
+        clickMenuCategory();
+        searchCategory("[07082024] - Category Update");
+    }
+
+    @Test (description = "Delete a category")
+    public void deleteCategory(){
+        clickMenuProduct();
+        clickMenuCategory();
+        verifyHeardPageCategory();
+        searchCategory("[07082024] - Category Update");
+        WebElement icon_Delete = driver.findElement(By.xpath("(//div[@class='card-body']//descendant::tbody/tr/td[10])/a[@title= 'Delete']"));
+        Assert.assertTrue(icon_Delete.isDisplayed(), "Icon Delete isn't display");
+        icon_Delete.click();
+        driver.findElement(By.xpath("//div[@class='modal-content']"));
+        String headerConfirmation = driver.findElement(By.xpath("//h4[normalize-space()='Delete Confirmation']")).getText();
+        Assert.assertEquals(headerConfirmation, "Delete Confirmation", "Header Confirmation is not right.");
+//        String confirmationMessage = driver.findElement(By.xpath("//div[@class='modal-content']//child::div/p")).getText();
+//        Assert.assertEquals(confirmationMessage, "Are you sure to delete this?", "Confirmation message is not true");
+//        driver.findElement(By.xpath("//a[@id='delete-link']")).click();
+//        verifyMessageActionSuccessful("Category has been deleted successfully");
+
+    }
+
 }
