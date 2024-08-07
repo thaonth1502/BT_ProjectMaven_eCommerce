@@ -1,4 +1,4 @@
-package com.thaonth.BT1.Locators;
+package com.thaonth.Locators;
 
 
 import common.BaseTest;

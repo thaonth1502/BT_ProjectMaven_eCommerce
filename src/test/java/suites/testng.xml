@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite AddCategory" verbose="1">
+    <test name="Add New Category">
+        <classes>
+            <class name="com.thaonth.BT3.Category">
+                <methods>
+                    <include name="createNewCategory"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
