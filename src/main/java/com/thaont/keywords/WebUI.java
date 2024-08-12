@@ -23,7 +23,7 @@ public class WebUI {
         }
 
         public static void waitForElementVisible(WebDriver driver, By by, int second) {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(second));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(second), Duration.ofMillis(500));
 
             wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         }
@@ -35,7 +35,7 @@ public class WebUI {
         }
 
         public static void waitForElementClickable(WebDriver driver, By by, int second) {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(second));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(second),  Duration.ofMillis(500));
 
             wait.until(ExpectedConditions.elementToBeClickable(by));
         }
@@ -63,6 +63,16 @@ public class WebUI {
                 return false;
             }
         }
+
+        public static void waitForElementSelected(WebDriver driver, WebElement element, int second){
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(second), Duration.ofMillis(500));
+            wait.until(ExpectedConditions.elementToBeSelected(element));
+        }
+        public static void waitForElementSelected(WebDriver driver, By by, int second){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(second), Duration.ofMillis(500));
+        wait.until(ExpectedConditions.elementToBeSelected(by));
+        }
+
 
         /**
          * Wait for Page loaded

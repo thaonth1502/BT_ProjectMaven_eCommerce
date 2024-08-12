@@ -1,5 +1,8 @@
 package common;
 
+import com.thaont.constants.ConfigData;
+import com.thaont.keywords.WebUI;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
@@ -20,14 +23,5 @@ public class BaseTest {
     @AfterMethod
    public static void closeDriver(){
        driver.quit();
-   }
-
-
-   public void sleep(double second){
-       try {
-           Thread.sleep((long) (1000 * second));
-       } catch (InterruptedException e) {
-           throw new RuntimeException(e);
-       }
    }
 }
