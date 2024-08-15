@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite LoginTest" verbose="1">
+    <test name="Login">
+        <classes>
+            <class name="com.thaonth.BT5.testcases.CreateNewCategoryTest"/>
+
+        </classes>
+    </test>
+</suite>
