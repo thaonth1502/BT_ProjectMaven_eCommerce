@@ -66,7 +66,6 @@ public class CreateNewCategoryTest extends BaseTest {
         createNewCategoryPage.attImageIcon("jordanLogo");
         createNewCategoryPage.clickButtonSave();
         createNewCategoryPage.verifyCreateCategorySuccess("Category has been inserted successfully");
-
     }
 
 }

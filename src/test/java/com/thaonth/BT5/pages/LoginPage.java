@@ -51,4 +51,15 @@ public class LoginPage {
         Assert.assertTrue(driver.findElement(errorMessage).isDisplayed(), "FAIL !!! The error message not display");
         Assert.assertEquals(driver.findElement(errorMessage).getText(), expectedMessage, "The content of error message not match");
     }
+    public void verifyLoginWithEmailBlank(String expectedMessage){
+        String validateMessage = driver.findElement(inputEmail).getAttribute("validationMessage");
+        System.out.println(validateMessage);
+        Assert.assertEquals(validateMessage, expectedMessage, "FAIL!!! The content message when field empty not match");
+    }
+
+    public void verifyLoginWithPassworkBlank(String expectedMessage){
+        String validateMessage = driver.findElement(inputPassword).getAttribute("validationMessage");
+        System.out.println(validateMessage);
+        Assert.assertEquals(validateMessage, expectedMessage, "FAIL!!! The content message when field empty not match");
+    }
 }

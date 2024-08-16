@@ -116,7 +116,8 @@ public class CreateNewCategoryPage {
        wait.until(ExpectedConditions.visibilityOfElementLocated(successMessage));
        Assert.assertTrue(driver.findElement(successMessage).isDisplayed(), "FAIL!!! The message success not display");
        Assert.assertEquals(driver.findElement(successMessage).getText(), expectedMessage, "FAIL !! The content message is match");
-
    }
+
+
 
 }
